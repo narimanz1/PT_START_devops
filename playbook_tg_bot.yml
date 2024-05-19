@@ -1,0 +1,82 @@
+#Сначала установим все необходимое на хосты
+- name: Installation to hosts
+  hosts: all
+  become: true
+  tasks:
+    - name: Install Postgresql
+      package:
+        name: postgresql
+        state: present
+    - name: Install Postgresql-contrib
+      package:
+        name: postgresql-contrib
+        state: present
+    - name: Install libpq-dev
+      package:
+        name: libpq-dev
+        state: present
+#Перейдем к настройке хоста с ботом и бд
+- name:
+  hosts: host1
+  become: true
+  tasks:
+    - name: apt install
+      apt:
+        pkg:
+          - python3-pip
+          - git
+          - sysstat
+          
+    - name: Git Clone
+      git:
+        repo: "{{ hostvars[inventory_hostname]['GIT'] }}"
+        version: main
+        dest: "{{ hostvars[inventory_hostname]['WORKDIR'] }}"
+
+    - name: Pip pip pip
+      pip:
+        requirements: "{{ hostvars[inventory_hostname]['WORKDIR'] }}/requirements.txt"
+
+    - name: Logs
+      command: mkdir -pm 777 "{{ hostvars[inventory_hostname]['WORKDIR'] }}/../logs"
+
+    - name: postgresql.conf
+      blockinfile:
+        path: "/etc/postgresql/{{ hostvars[inventory_hostname]['POSTGRES_VERSION'] }}/main/postgresql.conf"
+        block: |
+          listen_addresses = '*'
+          port = {{ hostvars[inventory_hostname]['DB_PORT'] }}
+          max_wal_senders=10
+          wal_level=replica
+          wal_log_hints = on
+          hot_standby=on
+          max_replication_slots=10
+          hot_standby_feedback=on
+          log_replication_commands=on
+
+    - name: pg_hba
+      blockinfile:
+        path: "/etc/postgresql/{{ hostvars[inventory_hostname]['POSTGRES_VERSION'] }}/main/pg_hba.conf"
+        block: |
+          local all postgres peer
+          host replication all {{ hostvars[inventory_hostname]['ansible_host'] }}/24 scram-sha-256
+          host all all {{ hostvars[inventory_hostname]['ansible_host'] }}/32 trust
+
+    - name: apply configuration
+      service:
+        name: postgresql
+        state: restarted
+      become: true
+
+    - name: Create init.sql from template
+      template:
+        src: init.sql.j2
+        dest: /tmp/init.sql
+        owner: postgres
+        group: postgres
+        mode: '0644'
+
+    - name: Run init.sql
+      command: /usr/bin/psql -a -f /tmp/init.sql
+      become: true
+      become_user: postgres
