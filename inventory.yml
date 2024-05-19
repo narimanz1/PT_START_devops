@@ -5,7 +5,7 @@ all:
     DB_HOST: 192.168.77.140
     DB_PORT: 5432
 
-    DB_DATABASE: tgbot
+    DB_DATABASE: 
     
     DB_REPL_HOST: 192.168.77.141
     DB_REPL_USER: repl_user
@@ -18,7 +18,7 @@ all:
     RM_PASSWORD: ansible
 
     WORK_DIR: /root/ansible
-    TOKEN: 7061115871:AAFi-Kx9W9AvLOn1W67QALAn0BN1KGhtxH4
+    TOKEN: 
     POSTGRES_VER: 14
     GIT_LINK: https://github.com/narimanz1/PT_START_devops.git
   
