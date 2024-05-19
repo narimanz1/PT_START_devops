@@ -258,7 +258,7 @@ def monitorLinux (update: Update, context):
         case 'get_auths':
             exec_command = "last -n 10"
         case 'get_repl_logs':
-            exec_command = f'echo "{password}" | sudo -S docker logs db_image | grep replication | tail -n 25'
+            exec_command = 'cat /var/log/postgresql/postgresql-14-main.log | grep replic | tail -n 25'
         case 'get_critical':
             exec_command = 'tail -n 5 /var/log/syslog | grep "CRITICAL"'
         case 'get_ps':
@@ -277,7 +277,7 @@ def monitorLinux (update: Update, context):
     stdin, stdout, stderr = client.exec_command(exec_command)
     data = stdout.read() + stderr.read()
     output = str(data).replace('\\n', '\n').replace('\\t', '\t')[2:-1]
-    if exec_command == f'echo "{password}" | sudo -S docker logs db_image | grep replication | tail -n 25' and 'repl' in output.lower():
+    if exec_command == f'cat /var/log/postgresql/postgresql-14-main.log | grep replic | tail -n 25' and 'repl' in output.lower():
         logs = output.split('\n')
         log_out = 'Repl logs:\n'
         for log in logs:
@@ -309,7 +309,7 @@ def get_replication_logs(update: Update, context):
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     client.connect(hostname=host, username=username, password=password, port=port)
     #command = 'grep -E \"repl_user|database\" /var/log/postgresql/postgresql-15-main.log | tail -n 25'
-    command = f'echo "{password}" | sudo -S docker logs db_image | grep replication | tail -n 25'
+    command = 'cat /var/log/postgresql/postgresql-14-main.log | grep replica | tail -n 25'
     stdin, stdout, stderr = client.exec_command(command)
     data = stdout.read() + stderr.read()
     update.message.reply_text(str(data).replace('\\n', '\n').replace('\\t', '\t')[2:-1])
