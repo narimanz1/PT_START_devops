@@ -1,33 +1,29 @@
-all:
+myhosts:
   vars:
-    DB_USER: postgres
-    DB_PASSWORD: postgres
-    DB_HOST: 192.168.77.140
-    DB_PORT: 5432
-
-    DB_DATABASE: tgbot
-    
-    DB_REPL_HOST: 192.168.77.141
     DB_REPL_USER: repl_user
-    DB_REPL_PASSWORD: postgres
+    DB_REPL_PASSWORD: Qq12345
     DB_REPL_PORT: 5432
-
-    RM_HOST: 192.168.77.140
-    RM_PORT: 22
-    RM_USER: ansible
-    RM_PASSWORD: ansible
-
-    WORK_DIR: /root/ansible
-    TOKEN: 7061115871:AAFi-Kx9W9AvLOn1W67QALAn0BN1KGhtxH4
-    POSTGRES_VER: 14
-    GIT_LINK: https://github.com/narimanz1/PT_START_devops.git
-  
+    POSTGRES_VERSION: 14
+    DB_HOST: 192.168.77.145
+    DB_PORT: 5432
   hosts:
     host1:
-      ansible_host: 192.168.77.140
+      ansible_host: 192.168.77.145
       ansible_user: ansible
-      ansible_password: ansible
+      ansible_ssh_pass: ansible
+      GIT: https://github.com/narimanz1/PT_START_devops.git
+      WORKDIR: /home/bot2
+      TOKEN: 7061115871:AAFi-Kx9W9AvLOn1W67QALAn0BN1KGhtxH4
+      RM_HOST: 192.168.77.145
+      RM_PORT: 22
+      RM_USER: ansible
+      RM_PASSWORD: ansible
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_DATABASE: tgbot
+      DB_REPL_HOST: 192.168.77.144
+      DB_REPL_PORT: 5432
     host2:
-      ansible_host: 192.168.77.141
+      ansible_host: 192.168.77.144
       ansible_user: ansible
-      ansible_password: ansible
+      ansible_ssh_pass: ansible
