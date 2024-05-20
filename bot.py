@@ -11,8 +11,8 @@ from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, Conve
 from pathlib import Path
 from dotenv import load_dotenv
 
-dotenv_path = Path('.env')
-load_dotenv(dotenv_path=dotenv_path)
+
+load_dotenv()
 TOKEN = os.getenv('TOKEN')
 
 # Подключаем логирование
@@ -73,8 +73,7 @@ def confirmSaveNumbers(update: Update, context):
     return ConversationHandler.END
 # Сохранение номеров телефона в базу данных
 def save_numbers_to_db(numbers):
-    dotenv_path = Path('.env')
-    load_dotenv(dotenv_path=dotenv_path)
+    load_dotenv()
     connection = None
     try:
         connection = psycopg2.connect(user=os.getenv('DB_USER'),
@@ -96,8 +95,7 @@ def save_numbers_to_db(numbers):
             connection.close()
 # Получение телефонных номеров из базы данных
 def get_phone_numbers(update: Update, context):
-    dotenv_path = Path('../.env')
-    load_dotenv(dotenv_path=dotenv_path)
+    load_dotenv()
     connection = None
     try:
         connection = psycopg2.connect(user=os.getenv('DB_USER'),
@@ -157,8 +155,7 @@ def confirmSaveEmails(update: Update, context):
     return ConversationHandler.END
 # Сохранение адресов электронной почты в базу данных
 def save_emails_to_db(emails):
-    dotenv_path = Path('.env')
-    load_dotenv(dotenv_path=dotenv_path)
+    load_dotenv()
     connection = None
     try:
         connection = psycopg2.connect(user=os.getenv('DB_USER'),
@@ -180,8 +177,7 @@ def save_emails_to_db(emails):
             connection.close()
 # Получение списка адресов электронной почты из базы данных
 def get_emails(update: Update, context):
-    dotenv_path = Path('.env')
-    load_dotenv(dotenv_path=dotenv_path)
+    load_dotenv()
     connection = None
     try:
         connection = psycopg2.connect(user=os.getenv('DB_USER'),
@@ -221,8 +217,7 @@ def verifyPass (update: Update, context):
     return ConversationHandler.END
 #==========Мониторинг Linux системы===================
 def monitorLinux (update: Update, context): 
-    dotenv_path = Path('.env')
-    load_dotenv(dotenv_path=dotenv_path)
+    load_dotenv()
 
     host = os.getenv('RM_HOST')
     port = os.getenv('RM_PORT')
@@ -296,8 +291,7 @@ def echo(update: Update, context):
     update.message.reply_text(update.message.text)
 # Вывод логов о репликации
 def get_replication_logs(update: Update, context):
-    dotenv_path = Path('.env')
-    load_dotenv(dotenv_path=dotenv_path)
+    load_dotenv()
 
     host = os.getenv('RM_HOST')
     port = os.getenv('RM_PORT')
