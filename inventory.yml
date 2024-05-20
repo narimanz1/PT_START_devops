@@ -1,11 +1,36 @@
 myhosts:
   vars:
+<<<<<<< HEAD
+=======
+    DB_USER: postgres
+    DB_PASSWORD: postgres
+    DB_HOST: 192.168.77.140
+    DB_PORT: 5432
+
+    DB_DATABASE: 
+    
+    DB_REPL_HOST: 192.168.77.141
+>>>>>>> f2f9d313335258df09058d20493d1c53caedf2ab
     DB_REPL_USER: repl_user
     DB_REPL_PASSWORD: Qq12345
     DB_REPL_PORT: 5432
+<<<<<<< HEAD
     POSTGRES_VERSION: 14
     DB_HOST: 192.168.77.145
     DB_PORT: 5432
+=======
+
+    RM_HOST: 192.168.77.140
+    RM_PORT: 22
+    RM_USER: ansible
+    RM_PASSWORD: ansible
+
+    WORK_DIR: /root/ansible
+    TOKEN: 
+    POSTGRES_VER: 14
+    GIT_LINK: https://github.com/narimanz1/PT_START_devops.git
+  
+>>>>>>> f2f9d313335258df09058d20493d1c53caedf2ab
   hosts:
     host1:
       ansible_host: 192.168.77.145
