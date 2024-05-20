@@ -253,7 +253,7 @@ def monitorLinux (update: Update, context):
         case 'get_auths':
             exec_command = "last -n 10"
         case 'get_repl_logs':
-            exec_command = 'cat /var/log/postgresql/postgresql-14-main.log | grep replic | tail -n 25'
+            exec_command = 'cat /var/log/postgresql/* | grep replic | tail -n 25'
         case 'get_critical':
             exec_command = 'tail -n 5 /var/log/syslog | grep "CRITICAL"'
         case 'get_ps':
