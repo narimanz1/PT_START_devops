@@ -255,7 +255,7 @@ def monitorLinux (update: Update, context):
         case 'get_repl_logs':
             exec_command = f'echo "{password}" | sudo -S cat /var/log/postgresql/* | grep replic | tail -n 25'
         case 'get_critical':
-            exec_command = "f'echo '{password}' | sudo -S tail -n 5 /var/log/syslog | grep 'CRITICAL'"
+            exec_command = f'echo "{password}" | sudo -S tail -n 5 /var/log/syslog | grep "CRITICAL"'
         case 'get_ps':
             exec_command = 'ps aux | head -n 10 && echo "...First 10 ps"...'
         case 'get_ss':
