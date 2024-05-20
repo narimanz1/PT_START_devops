@@ -253,7 +253,7 @@ def monitorLinux (update: Update, context):
         case 'get_auths':
             exec_command = "last -n 10"
         case 'get_repl_logs':
-            exec_command = "f'echo '{password}' | sudo -S cat /var/log/postgresql/* | grep replic | tail -n 25"
+            exec_command = f'echo "{password}" | sudo -S cat /var/log/postgresql/* | grep replic | tail -n 25'
         case 'get_critical':
             exec_command = "f'echo '{password}' | sudo -S tail -n 5 /var/log/syslog | grep 'CRITICAL'"
         case 'get_ps':
@@ -272,7 +272,7 @@ def monitorLinux (update: Update, context):
     stdin, stdout, stderr = client.exec_command(exec_command)
     data = stdout.read() + stderr.read()
     output = str(data).replace('\\n', '\n').replace('\\t', '\t')[2:-1]
-    if exec_command == "f'echo '{password}' | sudo -S cat /var/log/postgresql/* | grep replic | tail -n 25" and 'repl' in output.lower():
+    if exec_command == f'echo "{password}" | sudo -S cat /var/log/postgresql/* | grep replic | tail -n 25' and 'repl' in output.lower():
         logs = output.split('\n')
         log_out = 'Repl logs:\n'
         for log in logs:
